@@ -6,6 +6,8 @@ package com.kpi.java.web.labs.lab1_java_web;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -20,45 +22,52 @@ import java.util.concurrent.Future;
  */
 public class ReverseWritter implements Callable<Integer> {
 
-    private File dir;
-    private String newDirName;
-    private String word;
+    private File dirToSearch;
+    private String dirToStorePathName;
     private ExecutorService pool;
-    
-    public ReverseWritter(File dir, String word, ExecutorService pool) {
-        this.dir = dir;
-        this.word = word;
+
+    public ReverseWritter(File dirToSearch, String dirToStorePathName, ExecutorService pool) {
+        this.dirToSearch = dirToSearch;
+        this.dirToStorePathName = dirToStorePathName;
         this.pool = pool;
     }
 
-    public boolean search(File ff) {
-        try ( Scanner sc = new Scanner(new FileInputStream(ff))) {
-            boolean flag = false;
-            while (!flag && sc.hasNextLine()) {
-                String str = sc.nextLine();
-                if (str.contains(word)) {
-                    flag = true;
+    public boolean reverseWrite(File file) {
+        if (file.isFile() && file.toString().endsWith(".java")) {
+                String whereTo = dirToStorePathName + "\\" + file.getName().substring(0, file.getName().indexOf(".java")) + "Reversed" + ".java";
+                try ( Scanner myReader = new Scanner(file);  FileWriter myWriter = new FileWriter(whereTo);) {
+                    while (myReader.hasNextLine()) {
+                        String data = myReader.nextLine();
+                        myWriter.write(new StringBuffer(data).reverse().toString());
+                        myWriter.write(System.getProperty("line.separator"));
+                    }
+                } catch (FileNotFoundException e) {
+                    System.out.println("An error occurred.");
+                    e.printStackTrace();
+                    return false;
+                } catch (IOException e) {
+                    System.out.println("An error occurred.");
+                    e.printStackTrace();
+                    return false;
                 }
             }
-            return flag;
-        } catch (IOException e) {
-            return false;
-        }
+        
+        return true;
     }
 
     @Override
     public Integer call() {
         int count = 0;
         try {
-            File[] files = dir.listFiles();
+            File[] files = dirToSearch.listFiles();
             ArrayList<Future<Integer>> result = new ArrayList<>();
 
             for (File f : files) {
                 if (f.isDirectory()) {
-                    ReverseWritter counter = new ReverseWritter(f, word, pool);
-                    Future<Integer> rez = pool.submit(counter);
+                    ReverseWritter reverseWritter = new ReverseWritter(f, dirToStorePathName, pool);
+                    Future<Integer> rez = pool.submit(reverseWritter);
                     result.add(rez);
-                } else if (search(f)) {
+                } else if (reverseWrite(f)) {
                     count++;
                 }
 

@@ -22,8 +22,8 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         File dirToSearch;
-        String dirToStorePath = null;
-        String dirToStoreName = null;
+        String dirToStorePath;
+        String dirToStoreName;
 
         while (true) {
 
@@ -50,16 +50,16 @@ public class Main {
             }
         }
 
-//        ExecutorService pool = Executors.newCachedThreadPool();
-//        ReverseWritter counter = new ReverseWritter(new File(dir), word, pool);
-//        Future<Integer> res = pool.submit(counter);
-//
-//        try {
-//            System.out.println(res.get() + " files");
-//        } catch (ExecutionException | InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        pool.shutdown();
+        ExecutorService pool = Executors.newCachedThreadPool();
+        ReverseWritter counter = new ReverseWritter(dirToSearch, dirToStorePath + "//" + dirToStoreName, pool);
+        Future<Integer> res = pool.submit(counter);
+
+        try {
+            System.out.println(res.get() + " files reversed");
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        pool.shutdown();
     }
 
     private static void validateDir(File dir) {
