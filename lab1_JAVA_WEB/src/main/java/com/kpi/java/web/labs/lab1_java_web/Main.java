@@ -1,16 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Project/Maven2/JavaApp/src/main/java/${packagePath}/${mainClassName}.java to edit this template
- */
 package com.kpi.java.web.labs.lab1_java_web;
 
 import java.io.File;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 /**
  * @author yarxs
@@ -23,6 +17,7 @@ public class Main {
         File dirToSearch;
         String dirToStorePath;
         String dirToStoreName;
+        String dirToStorePathName;
 
         while (true) {
 
@@ -37,7 +32,9 @@ public class Main {
                 System.out.println("Enter name for storing directory: ");
                 dirToStoreName = sc.next();
 
-                if (!createStoringDir(dirToStorePath + "\\" + dirToStoreName)) {
+                dirToStorePathName = dirToStorePath + "\\" + dirToStoreName;
+
+                if (!createStoringDir(dirToStorePathName)) {
                     throw new UnsupportedOperationException();
                 }
 
@@ -50,7 +47,7 @@ public class Main {
         }
 
         ExecutorService pool = Executors.newCachedThreadPool();
-        ReverseWriter reverseWriter = new ReverseWriter(dirToSearch, dirToStorePath + "//" + dirToStoreName, pool);
+        ReverseWriter reverseWriter = new ReverseWriter(dirToSearch, dirToStorePathName, pool);
         pool.submit(reverseWriter);
 
         System.out.println("All files reversed!");
