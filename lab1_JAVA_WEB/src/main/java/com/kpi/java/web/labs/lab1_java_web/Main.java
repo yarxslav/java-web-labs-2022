@@ -13,7 +13,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 /**
- *
  * @author yarxs
  */
 public class Main {
@@ -28,14 +27,14 @@ public class Main {
         while (true) {
 
             try {
-                System.out.println("Enter path to dir where to find files");
+                System.out.println("Enter path to dir where to find files: ");
                 dirToSearch = new File(sc.next());
                 validateDir(dirToSearch);
 
-                System.out.println("Enter path for storing directory");
+                System.out.println("Enter path for storing directory: ");
                 dirToStorePath = sc.next();
 
-                System.out.println("Enter name for storing directory");
+                System.out.println("Enter name for storing directory: ");
                 dirToStoreName = sc.next();
 
                 if (!createStoringDir(dirToStorePath + "\\" + dirToStoreName)) {
@@ -43,22 +42,19 @@ public class Main {
                 }
 
                 break;
-            } catch(InputMismatchException e) {
+            } catch (InputMismatchException e) {
                 System.out.println("Wrong path to directory. Try again!");
-            } catch(UnsupportedOperationException e) {
+            } catch (UnsupportedOperationException e) {
                 System.out.println("Failed to create storing directory. Try again!");
             }
         }
 
         ExecutorService pool = Executors.newCachedThreadPool();
-        ReverseWritter counter = new ReverseWritter(dirToSearch, dirToStorePath + "//" + dirToStoreName, pool);
-        Future<Integer> res = pool.submit(counter);
+        ReverseWriter reverseWriter = new ReverseWriter(dirToSearch, dirToStorePath + "//" + dirToStoreName, pool);
+        pool.submit(reverseWriter);
 
-        try {
-            System.out.println(res.get() + " files reversed");
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
+        System.out.println("All files reversed!");
+
         pool.shutdown();
     }
 
@@ -74,7 +70,6 @@ public class Main {
         File theDir = new File(pathName);
         if (!theDir.exists()) {
             created = theDir.mkdir();
-            System.out.println(created);
         }
 
         return created;
