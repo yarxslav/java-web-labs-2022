@@ -50,9 +50,15 @@ public class Main {
         ReverseWriter reverseWriter = new ReverseWriter(dirToSearch, dirToStorePathName, pool);
         pool.submit(reverseWriter);
 
+        try {
+            Thread.sleep(5000);
+            pool.shutdown();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         System.out.println("All files reversed!");
 
-        pool.shutdown();
     }
 
     private static void validateDir(File dir) {
