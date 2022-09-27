@@ -5,6 +5,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author yarxs
@@ -47,18 +48,18 @@ public class Main {
         }
 
         ExecutorService pool = Executors.newCachedThreadPool();
-        ReverseWriter reverseWriter = new ReverseWriter(dirToSearch, dirToStorePathName, pool);
-        pool.submit(reverseWriter);
+        Finder finder = new Finder(dirToSearch, dirToStorePathName, pool);
+        pool.submit(finder);
 
         try {
-            Thread.sleep(5000);
-            pool.shutdown();
+            pool.awaitTermination(5000, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } finally {
+            pool.shutdown();
         }
 
         System.out.println("All files reversed!");
-
     }
 
     private static void validateDir(File dir) {
