@@ -7,11 +7,13 @@ public class Subscription {
     private Long id;
     private Long userId;
     private Long serviceId;
+    private Long tariffId;
 
-    public Subscription(Long id, Long userId, Long serviceId) {
+    public Subscription(Long id, Long userId, Long serviceId, Long tariffId) {
         this.id = id;
         this.userId = userId;
         this.serviceId = serviceId;
+        this.tariffId = tariffId;
     }
 
     public Long getId() {
@@ -36,6 +38,14 @@ public class Subscription {
 
     public void setServiceId(Long serviceId) {
         this.serviceId = serviceId;
+    }
+
+    public Long getTariffId() {
+        return tariffId;
+    }
+
+    public void setTariffId(Long tariffId) {
+        this.tariffId = tariffId;
     }
 
     @Override

@@ -5,23 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f925dbee-dd87-4130-aee2-daddf2d48de3" name="Changes" comment="beans added and test dao">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/dao/ConnectionFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/dao/UserJDBCDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/entity/Account.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/entity/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/entity/Service.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/entity/Subscription.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/entity/Tariff.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/entity/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/controller/LoginController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/controller/MainController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/dao/AccountDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/dao/AccountDaoImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/dao/ServiceDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/dao/ServiceDaoImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/dao/SubscriptionDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/dao/SubscriptionDaoImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/dao/TariffDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/dao/TariffDaoImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/dao/UserDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/model/Model.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/utils/SortOption.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/view/AdminOptionsMessages.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/view/CustomerOptionsMessages.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/view/ErrorMessages.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/view/GeneralMessages.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/view/View.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/dao/ConnectionFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/utils/ConnectionFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/dao/UserJDBCDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/dao/UserDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/entity/Subscription.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/entity/Subscription.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/entity/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +38,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Kotlin Class" />
         <option value="Class" />
       </list>
     </option>
@@ -57,6 +67,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -71,8 +82,19 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1666338151811</updated>
-      <workItem from="1666338153232" duration="7615000" />
+      <workItem from="1666338153232" duration="7651000" />
+      <workItem from="1666375681129" duration="1971000" />
+      <workItem from="1666443795470" duration="599000" />
+      <workItem from="1666516757262" duration="15999000" />
     </task>
+    <task id="LOCAL-00001" summary="beans added and test dao">
+      <created>1666349877094</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1666349877094</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

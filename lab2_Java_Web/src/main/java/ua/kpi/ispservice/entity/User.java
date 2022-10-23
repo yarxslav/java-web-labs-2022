@@ -8,15 +8,17 @@ public class User {
     private String username;
     private String password;
     private Long roleId;
+    private boolean blocked;
     public User () {
 
     }
 
-    public User(Long id, String username, String password, Long roleId) {
+    public User(Long id, String username, String password, Long roleId, boolean blocked) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.roleId = roleId;
+        this.blocked = blocked;
     }
 
     public Long getId() {
@@ -49,6 +51,14 @@ public class User {
 
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
     }
 
     @Override

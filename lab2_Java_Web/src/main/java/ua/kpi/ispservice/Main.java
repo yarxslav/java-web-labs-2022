@@ -1,21 +1,22 @@
 package ua.kpi.ispservice;
 
-import ua.kpi.ispservice.dao.UserJDBCDAO;
-import ua.kpi.ispservice.entity.User;
+import ua.kpi.ispservice.controller.LoginController;
+import ua.kpi.ispservice.controller.MainController;
+import ua.kpi.ispservice.model.Model;
+import ua.kpi.ispservice.view.View;
 
 import java.sql.SQLException;
 
 public class Main {
 
     public static void main(String[] args) throws SQLException {
-        UserJDBCDAO userJDBCDAO = new UserJDBCDAO();
+        MainController mainController = new MainController(new View());
 
-        User user = new User();
-        user.setId(5L);
-        user.setUsername("tester");
-        user.setPassword("test");
-        user.setRoleId(1L);
+        try {
+            mainController.execute();
+        } catch (IllegalArgumentException e) {
+            mainController.execute();
+        }
 
-        userJDBCDAO.findAll();
     }
 }
