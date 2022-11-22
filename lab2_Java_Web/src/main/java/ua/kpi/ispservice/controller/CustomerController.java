@@ -4,6 +4,7 @@ import ua.kpi.ispservice.ApplicationContext;
 import ua.kpi.ispservice.entity.Service;
 import ua.kpi.ispservice.entity.Subscription;
 import ua.kpi.ispservice.entity.Tariff;
+import ua.kpi.ispservice.entity.User;
 import ua.kpi.ispservice.repository.*;
 import ua.kpi.ispservice.repository.dao.*;
 import ua.kpi.ispservice.service.*;
@@ -60,11 +61,11 @@ public class CustomerController {
         BigDecimal amount = customerView.updateBalanceDialog();
 
         accountService.updateBalance(ApplicationContext.getInstance().getCurrentUser(), amount);
+        customerView.balanceUpdated();
     }
 
     private void checkServicesList() {
         List<Service> services = serviceService.findAll();
-
         customerView.displayServicesList(services);
     }
 
@@ -79,23 +80,27 @@ public class CustomerController {
 
     private void downloadAllTariffs() {
         downloader.download(customerView.defineDownloadOptions());
+        customerView.downloadSuccess();
     }
 
     private void downloadExactServiceTariffs() {
         Service service = serviceService.findByName(customerView.getServiceName());
-
         downloader.download(customerView.defineDownloadOptions(), service);
+        customerView.downloadSuccess();
     }
 
     private void subscribe() {
-        Service service = serviceService.findByName(customerView.getServiceName());
-        String tariffName = customerView.getTariffName();
-        Tariff tariff = tariffService.getByServiceAndName(service, tariffName);
-        Subscription subscription = new Subscription(ApplicationContext.getInstance().getCurrentUser().getId(),
-                service.getId(), tariff.getId());
+        User user = ApplicationContext.getInstance().getCurrentUser();
 
-        if (!subscriptionService.subscribe(subscription, tariff)) {
+        if (user.isBlocked()) {
             customerView.blockedMessage();
+        } else {
+            Service service = serviceService.findByName(customerView.getServiceName());
+            String tariffName = customerView.getTariffName();
+            Tariff tariff = tariffService.getByServiceAndName(service, tariffName);
+            Subscription subscription = new Subscription(user.getId(),
+                    service.getId(), tariff.getId());
+            subscriptionService.subscribe(subscription, tariff, user);
         }
     }
 

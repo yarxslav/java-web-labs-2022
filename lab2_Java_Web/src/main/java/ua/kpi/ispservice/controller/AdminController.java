@@ -3,12 +3,19 @@ package ua.kpi.ispservice.controller;
 import ua.kpi.ispservice.ApplicationContext;
 import ua.kpi.ispservice.entity.Service;
 import ua.kpi.ispservice.entity.Tariff;
+import ua.kpi.ispservice.entity.User;
 import ua.kpi.ispservice.repository.ServiceRepository;
 import ua.kpi.ispservice.repository.TariffRepository;
+import ua.kpi.ispservice.repository.UserRepository;
+import ua.kpi.ispservice.repository.dao.RoleDaoImpl;
 import ua.kpi.ispservice.repository.dao.ServiceDaoImpl;
 import ua.kpi.ispservice.repository.dao.TariffDaoImpl;
+import ua.kpi.ispservice.repository.dao.UserDaoImpl;
+import ua.kpi.ispservice.repository.RoleRepository;
+import ua.kpi.ispservice.service.RoleService;
 import ua.kpi.ispservice.service.ServiceService;
 import ua.kpi.ispservice.service.TariffService;
+import ua.kpi.ispservice.service.UserService;
 import ua.kpi.ispservice.view.AdminView;
 
 import java.math.BigDecimal;
@@ -18,11 +25,15 @@ public class AdminController {
     private AdminView adminView;
     private ServiceService serviceService;
     private TariffService tariffService;
+    private UserService userService;
+    private RoleService roleService;
 
     public AdminController(AdminView adminView) {
         this.adminView = adminView;
         serviceService = new ServiceService(new ServiceRepository(new ServiceDaoImpl()));
         tariffService = new TariffService(new TariffRepository(new TariffDaoImpl()));
+        userService = new UserService(new UserRepository(new UserDaoImpl()));
+        roleService = new RoleService(new RoleRepository(new RoleDaoImpl()));
     }
 
     public void execute() {
@@ -32,8 +43,8 @@ public class AdminController {
             case DELETE_TARIFF -> deleteTariff();
             case UPDATE_TARIFF -> updateTariff();
             case REGISTER_CUSTOMER -> registerCustomer();
-            case BLOCK_CUSTOMER -> blockCustomer();
-            case UNBLOCK_CUSTOMER -> unblockCustomer();
+            case BLOCK_CUSTOMER -> updateStatus(true);
+            case UNBLOCK_CUSTOMER -> updateStatus(false);
         }
     }
 
@@ -44,6 +55,7 @@ public class AdminController {
                 new BigDecimal(Double.parseDouble(adminView.askForData("Tariff Cost"))));
 
         tariffService.create(tariff);
+        adminView.tariffAdded(tariff.getName());
     }
 
     private void deleteTariff() {
@@ -52,6 +64,7 @@ public class AdminController {
         Tariff tariff = tariffService.getByServiceAndName(service, name);
 
         tariffService.delete(tariff);
+        adminView.tariffDeleted();
     }
 
     private void updateTariff() {
@@ -64,6 +77,8 @@ public class AdminController {
             case DESCRIPTION -> updateTariffDescription(tariff);
             case COST -> updateTariffCost(tariff);
         }
+
+        adminView.tariffUpdated();
     }
 
     private void updateTariffName(Tariff tariff) {
@@ -85,15 +100,28 @@ public class AdminController {
     }
 
     private void registerCustomer() {
+        String username = adminView.askForData("Username");
+        String password = adminView.askForData("Password");
+        User user = null;
+
+        if (userService.findByUsername(username) == null) {
+            user = new User(username, password, roleService.findByName("Customer").getId(), false);
+            userService.create(user);
+            adminView.userAdded(username);
+        } else {
+            adminView.userAlreadyExisting();
+        }
 
     }
 
-    private void blockCustomer() {
-
+    private void updateStatus(boolean isBlocked) {
+        String username = adminView.askForData("Username");
+        User user = userService.findByUsername(username);
+        if (user != null) {
+            userService.updateStatus(user, isBlocked);
+            adminView.statusUpdated(isBlocked);
+        } else {
+            adminView.userDoesntExist();
+        }
     }
-
-    private void unblockCustomer() {
-
-    }
-
 }

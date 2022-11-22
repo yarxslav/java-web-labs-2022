@@ -2,26 +2,13 @@ package ua.kpi.ispservice.repository.dao;
 
 import ua.kpi.ispservice.entity.Account;
 import ua.kpi.ispservice.entity.User;
-import ua.kpi.ispservice.repository.utils.ConnectionFactory;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountDaoImpl implements AccountDao {
-    Connection connection = null;
-    PreparedStatement ptmt = null;
-    ResultSet resultSet = null;
-
-    private Connection getConnection() throws SQLException {
-        Connection conn;
-        conn = ConnectionFactory.getInstance().getConnection();
-        return conn;
-    }
+public class AccountDaoImpl extends BasicDao implements AccountDao {
 
     @Override
     public void create(Long ownerId) {
@@ -48,9 +35,8 @@ public class AccountDaoImpl implements AccountDao {
             ptmt.setDouble(1, amount.doubleValue());
             ptmt.setLong(2, user.getId());
             ptmt.executeUpdate();
-            System.out.println("Account balance updated successfully");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Something went wrong! Unable to update your balance :(");
         } finally {
             closeResources();
         }
@@ -99,18 +85,4 @@ public class AccountDaoImpl implements AccountDao {
         return balance;
     }
 
-    public void closeResources() {
-        try {
-            if (resultSet != null)
-                resultSet.close();
-            if (ptmt != null)
-                ptmt.close();
-            if (connection != null)
-                connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

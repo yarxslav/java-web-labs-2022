@@ -84,6 +84,6 @@ public class Subscription {
 
     @Override
     public String toString() {
-        return "Service: " + serviceName + "\nTariff: " + tariffName + "\nCost: " + tariffCost;
+        return "\tService: " + serviceName + "\n\tTariff: " + tariffName + "\n\tCost: " + tariffCost;
     }
 }

@@ -1,27 +1,13 @@
 package ua.kpi.ispservice.repository.dao;
 
 import ua.kpi.ispservice.entity.Subscription;
-import ua.kpi.ispservice.repository.utils.ConnectionFactory;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubscriptionDaoImpl implements SubscriptionDao {
-
-    Connection connection = null;
-    PreparedStatement ptmt = null;
-    ResultSet resultSet = null;
-
-    private Connection getConnection() throws SQLException {
-        Connection conn;
-        conn = ConnectionFactory.getInstance().getConnection();
-        return conn;
-    }
+public class SubscriptionDaoImpl extends BasicDao implements SubscriptionDao {
 
     @Override
     public void create(Subscription subscription) {
@@ -96,18 +82,4 @@ public class SubscriptionDaoImpl implements SubscriptionDao {
         return subscriptions;
     }
 
-    public void closeResources() {
-        try {
-            if (resultSet != null)
-                resultSet.close();
-            if (ptmt != null)
-                ptmt.close();
-            if (connection != null)
-                connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

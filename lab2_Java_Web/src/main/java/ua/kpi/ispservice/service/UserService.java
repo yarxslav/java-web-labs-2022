@@ -11,11 +11,15 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void block(User user) {
-        userRepository.blockUser(user);
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
-    public void unblock(User user) {
-        userRepository.unblockUser(user);
+    public void create(User user) {
+        userRepository.create(user);
+    }
+
+    public void updateStatus(User user, boolean isBlocked) {
+        userRepository.updateStatus(user, isBlocked);
     }
 }

@@ -7,8 +7,7 @@ import java.util.List;
 public interface UserDao {
 
     void create(User user);
-    void block(User user);
-    void unblock(User user);
+    void updateStatus(User user, boolean isBlocked);
     String role(User user);
     List<User> findAll();
     User findUserByUsername(String username);

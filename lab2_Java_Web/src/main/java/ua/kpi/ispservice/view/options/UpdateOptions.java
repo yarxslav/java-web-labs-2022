@@ -1,4 +1,4 @@
-package ua.kpi.ispservice.controller;
+package ua.kpi.ispservice.view.options;
 
 public enum UpdateOptions {
 

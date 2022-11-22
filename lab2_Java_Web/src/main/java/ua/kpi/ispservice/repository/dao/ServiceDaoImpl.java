@@ -1,27 +1,12 @@
 package ua.kpi.ispservice.repository.dao;
 
-import ua.kpi.ispservice.repository.utils.ConnectionFactory;
 import ua.kpi.ispservice.entity.Service;
 
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServiceDaoImpl implements ServiceDao {
-
-    Connection connection = null;
-    PreparedStatement ptmt = null;
-    ResultSet resultSet = null;
-
-    private Connection getConnection() throws SQLException {
-        Connection conn;
-        conn = ConnectionFactory.getInstance().getConnection();
-        return conn;
-    }
+public class ServiceDaoImpl extends BasicDao implements ServiceDao {
 
     @Override
     public List<Service> findAll() {
@@ -91,18 +76,4 @@ public class ServiceDaoImpl implements ServiceDao {
         return service;
     }
 
-    public void closeResources() {
-        try {
-            if (resultSet != null)
-                resultSet.close();
-            if (ptmt != null)
-                ptmt.close();
-            if (connection != null)
-                connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

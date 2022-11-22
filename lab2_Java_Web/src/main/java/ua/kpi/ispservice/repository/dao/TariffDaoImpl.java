@@ -1,28 +1,14 @@
 package ua.kpi.ispservice.repository.dao;
 
 import ua.kpi.ispservice.entity.Tariff;
-import ua.kpi.ispservice.repository.utils.ConnectionFactory;
-import ua.kpi.ispservice.repository.utils.SortOption;
+import ua.kpi.ispservice.view.options.SortOption;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TariffDaoImpl implements TariffDao {
-
-    Connection connection = null;
-    PreparedStatement ptmt = null;
-    ResultSet resultSet = null;
-
-    private Connection getConnection() throws SQLException {
-        Connection conn;
-        conn = ConnectionFactory.getInstance().getConnection();
-        return conn;
-    }
+public class TariffDaoImpl extends BasicDao implements TariffDao {
 
     @Override
     public void add(Tariff tariff) {
@@ -35,9 +21,8 @@ public class TariffDaoImpl implements TariffDao {
             ptmt.setString(3, tariff.getDescription());
             ptmt.setDouble(4, tariff.getCost().doubleValue());
             ptmt.executeUpdate();
-            System.out.println("Tariff" + tariff.getName() + " added successfully");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Ooops...Something went wrong. Unable to create new tariff :(");
         } finally {
             closeResources();
         }
@@ -54,9 +39,8 @@ public class TariffDaoImpl implements TariffDao {
             ptmt.setDouble(3, tariff.getCost().doubleValue());
             ptmt.setLong(4, tariff.getId());
             ptmt.executeUpdate();
-            System.out.println("Tariff updated successfully");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Ooops...Something went wrong. Unable to update tariff :(");
         } finally {
             closeResources();
         }
@@ -70,9 +54,8 @@ public class TariffDaoImpl implements TariffDao {
             ptmt = connection.prepareStatement(queryString);
             ptmt.setLong(1, tariff.getId());
             ptmt.executeUpdate();
-            System.out.println("Tariff deleted successfully");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Ooops...Something went wrong. Unable to delete tariff :(");
         } finally {
             closeResources();
         }
@@ -86,7 +69,8 @@ public class TariffDaoImpl implements TariffDao {
             String queryString = switch (sortOption) {
                 case ALPHABET_ASC -> "SELECT * FROM tariff ORDER BY name ASC";
                 case ALPHABET_DESC -> "SELECT * FROM tariff ORDER BY name DESC";
-                case PRICE -> "SELECT * FROM tariff ORDER BY price ASC";
+                case PRICE_ASC -> "SELECT * FROM tariff ORDER BY price ASC";
+                case PRICE_DESC -> "SELECT * FROM tariff ORDER BY price DESC";
             };
 
             connection = getConnection();
@@ -200,18 +184,4 @@ public class TariffDaoImpl implements TariffDao {
         return tariff;
     }
 
-    public void closeResources() {
-        try {
-            if (resultSet != null)
-                resultSet.close();
-            if (ptmt != null)
-                ptmt.close();
-            if (connection != null)
-                connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

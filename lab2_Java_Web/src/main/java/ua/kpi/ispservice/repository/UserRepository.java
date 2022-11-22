@@ -19,11 +19,11 @@ public class UserRepository {
         return userDao.role(user);
     }
 
-    public void blockUser(User user) {
-        userDao.block(user);
+    public void create(User user) {
+        userDao.create(user);
     }
 
-    public void unblockUser(User user) {
-        userDao.unblock(user);
+    public void updateStatus(User user, boolean isBlocked) {
+        userDao.updateStatus(user, isBlocked);
     }
 }

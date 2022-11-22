@@ -1,6 +1,5 @@
 package ua.kpi.ispservice.service;
 
-import ua.kpi.ispservice.ApplicationContext;
 import ua.kpi.ispservice.entity.Subscription;
 import ua.kpi.ispservice.entity.Tariff;
 import ua.kpi.ispservice.entity.User;
@@ -25,21 +24,14 @@ public class SubscriptionService {
         userService = new UserService(new UserRepository(new UserDaoImpl()));
     }
 
-    public boolean subscribe(Subscription subscription, Tariff tariff) {
+    public void subscribe(Subscription subscription, Tariff tariff, User user) {
 
-        User user = ApplicationContext.getInstance().getCurrentUser();
+        subscriptionRepository.subscribe(subscription);
+        accountService.updateBalance(user, tariff.getCost().negate());
 
-        if (user.isBlocked()) {
-            return false;
-        } else {
-            subscriptionRepository.subscribe(subscription);
-            accountService.updateBalance(user, tariff.getCost().negate());
-
-            int comparison = accountService.getBalanceByUser(user).compareTo(new BigDecimal(0.0));
-            if (comparison != 0 && comparison != 1) {
-                userService.block(user);
-            }
-            return true;
+        int comparison = accountService.getBalanceByUser(user).compareTo(new BigDecimal(0.0));
+        if (comparison != 0 && comparison != 1) {
+            userService.updateStatus(user, true);
         }
     }
 

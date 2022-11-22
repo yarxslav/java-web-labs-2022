@@ -6,7 +6,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.poi.xwpf.usermodel.*;
-import ua.kpi.ispservice.controller.DownloadOptions;
+import ua.kpi.ispservice.view.options.DownloadOptions;
 import ua.kpi.ispservice.entity.Service;
 import ua.kpi.ispservice.entity.Tariff;
 
@@ -54,9 +54,8 @@ public class Downloader {
                 f_writer.write("\n");
             }
         } catch (IOException e) {
-            System.out.print(e.getMessage());
+            System.out.println("Ooops...Something went wrong. Unable to download :(");
         }
-        System.out.println("Successfully downloaded. Look for file in Downloads folder.");
     }
 
     public void downloadTXT(Service service) {
@@ -70,9 +69,8 @@ public class Downloader {
                 }
                 f_writer.write("\n");
         } catch (IOException e) {
-            System.out.print(e.getMessage());
+            System.out.println("Ooops...Something went wrong. Unable to download :(");
         }
-        System.out.println("Successfully downloaded. Look for file in Downloads folder.");
     }
 
     private void downloadPDF() {
@@ -89,9 +87,8 @@ public class Downloader {
 
             document.add(table);
             document.close();
-            System.out.println("Successfully downloaded. Look for file in Downloads folder.");
         } catch (IOException | DocumentException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Ooops...Something went wrong. Unable to download :(");
         }
 
     }
@@ -148,9 +145,8 @@ public class Downloader {
 
             document.add(table);
             document.close();
-            System.out.println("Successfully downloaded. Look for file in Downloads folder.");
         } catch (IOException | DocumentException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Ooops...Something went wrong. Unable to download :(");
         }
     }
 
@@ -193,9 +189,8 @@ public class Downloader {
 
             document.write(out);
             out.close();
-            System.out.println("Successfully downloaded. Look for file in Downloads folder.");
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Ooops...Something went wrong. Unable to download :(");
         }
 
     }
@@ -245,9 +240,8 @@ public class Downloader {
 
             document.write(out);
             out.close();
-            System.out.println("Successfully downloaded. Look for file in Downloads folder.");
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Ooops...Something went wrong. Unable to download :(");
         }
     }
 

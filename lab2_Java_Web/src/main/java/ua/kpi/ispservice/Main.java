@@ -1,6 +1,5 @@
 package ua.kpi.ispservice;
 
-import ua.kpi.ispservice.controller.CustomerOptions;
 import ua.kpi.ispservice.controller.IndexController;
 import ua.kpi.ispservice.repository.UserRepository;
 import ua.kpi.ispservice.repository.dao.UserDaoImpl;

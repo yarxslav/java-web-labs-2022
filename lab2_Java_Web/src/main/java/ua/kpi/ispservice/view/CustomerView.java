@@ -1,11 +1,11 @@
 package ua.kpi.ispservice.view;
 
-import ua.kpi.ispservice.controller.CustomerOptions;
-import ua.kpi.ispservice.controller.DownloadOptions;
+import ua.kpi.ispservice.view.options.CustomerOptions;
+import ua.kpi.ispservice.view.options.DownloadOptions;
 import ua.kpi.ispservice.entity.Service;
 import ua.kpi.ispservice.entity.Subscription;
 import ua.kpi.ispservice.entity.Tariff;
-import ua.kpi.ispservice.repository.utils.SortOption;
+import ua.kpi.ispservice.view.options.SortOption;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -32,14 +32,14 @@ public class CustomerView {
     }
 
     public void displayBalance(BigDecimal balance) {
-        System.out.println("Your current balance is: " + balance.toString());
+        System.out.println("Your current balance is: " + balance.toString() + "\n");
     }
 
     public BigDecimal updateBalanceDialog() {
         System.out.println("Enter your card number: ");
         String cardNumber = scanner.next();
 
-        System.out.println("Type in an amount of funds you want to add to your balance (In format \"XX.XX\": ");
+        System.out.println("Type in an amount of funds you want to add to your balance (In format \"XX,XX\"): ");
         BigDecimal amount = new BigDecimal(scanner.nextDouble());
 
         return amount;
@@ -52,7 +52,7 @@ public class CustomerView {
     private void displayOptions() {
 
         for (CustomerOptions customerOption : CustomerOptions.values()) {
-            System.out.println(customerOption.toString());
+            System.out.println("\t" + customerOption.toString());
         }
 
     }
@@ -62,8 +62,9 @@ public class CustomerView {
 
         if (!services.isEmpty() || !(services == null)) {
             services.forEach(System.out::println);
+            System.out.println("\n");
         } else {
-            System.out.println("Ooops... Seems like there are no services yet.");
+            System.out.println("Ooops... Seems like there are no services yet.\n");
         }
     }
 
@@ -86,7 +87,7 @@ public class CustomerView {
 
         System.out.println("Select the format you want to download file: (Type in the number of option)");
         for (DownloadOptions downloadOption : DownloadOptions.values()) {
-            System.out.println(downloadOption.toString());
+            System.out.println("\t" + downloadOption.toString());
         }
 
         String value = scanner.nextLine();
@@ -108,22 +109,31 @@ public class CustomerView {
 
     public void blockedMessage() {
         System.out.println("Your account was blocked due to lack of funds.");
-        System.out.println("To be able to subscribe, please, top up your balance.");
+        System.out.println("To be able to subscribe, please, top up your balance.\n");
     }
 
     public void greeting(String username) {
-        System.out.println("Glad to see you, " + username);
+        System.out.println("Glad to see you, " + username + "!\n");
     }
 
     public void blockNotification(boolean blocked) {
         if (blocked) {
             System.out.println("Your account is BLOCKED at this moment.");
-            System.out.println("Please, top up your balance.");
+            System.out.println("Please, top up your balance.\n");
         }
     }
 
     public void displaySubscriptions(List<Subscription> subscriptions) {
         System.out.println("You subscribed to: ");
         subscriptions.forEach(System.out::println);
+        System.out.println("\n");
+    }
+
+    public void balanceUpdated() {
+        System.out.println("Account balance updated successfully!\n");
+    }
+
+    public void downloadSuccess() {
+        System.out.println("Successfully downloaded. Look for file in Downloads folder.\n");
     }
 }

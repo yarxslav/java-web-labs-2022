@@ -25,7 +25,7 @@ public class AccountService {
         BigDecimal newBalance = getBalanceByUser(currentUser).add(amount);
         accountRepository.updateBalance(currentUser, newBalance);
         if (getBalanceByUser(currentUser).compareTo(new BigDecimal(0.0)) == 1) {
-            userService.unblock(currentUser);
+            userService.updateStatus(currentUser, false);
         }
     }
 }

@@ -1,7 +1,7 @@
 package ua.kpi.ispservice.view;
 
-import ua.kpi.ispservice.controller.AdminOptions;
-import ua.kpi.ispservice.controller.UpdateOptions;
+import ua.kpi.ispservice.view.options.AdminOptions;
+import ua.kpi.ispservice.view.options.UpdateOptions;
 
 import java.util.Scanner;
 
@@ -9,7 +9,7 @@ public class AdminView {
     private final Scanner scanner = new Scanner(System.in);
 
     public void greeting(String username) {
-        System.out.println("Glad to see you, " + username + "!");
+        System.out.println("Glad to see you, " + username + "!\n");
     }
 
     public AdminOptions defineAdminOption() {
@@ -31,7 +31,7 @@ public class AdminView {
 
     private void displayOptions() {
         for (AdminOptions adminOption : AdminOptions.values()) {
-            System.out.println(adminOption.toString());
+            System.out.println("\t" + adminOption.toString());
         }
     }
 
@@ -46,7 +46,7 @@ public class AdminView {
 
         System.out.println("Select what you want to change: (Type in the number of option)");
         for (UpdateOptions updateOption : UpdateOptions.values()) {
-            System.out.println(updateOption.toString());
+            System.out.println("\t" + updateOption.toString());
         }
 
         String value = scanner.nextLine();
@@ -58,5 +58,37 @@ public class AdminView {
         }
 
         return option;
+    }
+
+    public void userAlreadyExisting() {
+        System.out.println("User with such username already exists. Choose another username!\n");
+    }
+
+    public void userDoesntExist() {
+        System.out.println("User with such username doesn't exist. Try again!\n");
+    }
+
+    public void tariffAdded(String name) {
+        System.out.println("New tariff " + name + " added successfully!\n");
+    }
+
+    public void tariffUpdated() {
+        System.out.println("Tariff updated successfully\n");
+    }
+
+    public void tariffDeleted() {
+        System.out.println("Tariff deleted successfully\n");
+    }
+
+    public void userAdded(String username) {
+        System.out.println("User " + username + " added successfully\n");
+    }
+
+    public void statusUpdated(boolean isBlocked) {
+        if (isBlocked) {
+            System.out.println("User blocked successfully\n");
+        } else {
+            System.out.println("User unblocked successfully\n");
+        }
     }
 }

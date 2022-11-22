@@ -1,30 +1,12 @@
 package ua.kpi.ispservice.repository.dao;
 
 import ua.kpi.ispservice.entity.User;
-import ua.kpi.ispservice.repository.utils.ConnectionFactory;
 
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoImpl implements UserDao {
-    Connection connection = null;
-    PreparedStatement ptmt = null;
-    ResultSet resultSet = null;
-
-    public UserDaoImpl() {
-
-    }
-
-    private Connection getConnection() throws SQLException {
-        Connection conn;
-        conn = ConnectionFactory.getInstance().getConnection();
-        return conn;
-    }
+public class UserDaoImpl extends BasicDao implements UserDao {
 
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
@@ -58,43 +40,24 @@ public class UserDaoImpl implements UserDao {
             ptmt.setLong(3, user.getRoleId());
             ptmt.setBoolean(4, user.isBlocked());
             ptmt.executeUpdate();
-            System.out.println("User " + user.getUsername() + " Added Successfully");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Ooops...Something went wrong. Unable to create new user :(");
         } finally {
             closeResources();
         }
     }
 
     @Override
-    public void block(User user) {
+    public void updateStatus(User user, boolean isBlocked) {
         try {
             String queryString = "UPDATE \"user\" SET blocked=? WHERE id=?";
             connection = getConnection();
             ptmt = connection.prepareStatement(queryString);
-            ptmt.setBoolean(1, user.isBlocked());
+            ptmt.setBoolean(1, isBlocked);
             ptmt.setLong(2, user.getId());
             ptmt.executeUpdate();
-            System.out.println("User " + user.getUsername() + " blocked successfully");
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeResources();
-        }
-    }
-
-    @Override
-    public void unblock(User user) {
-        try {
-            String queryString = "UPDATE \"user\" SET blocked=? WHERE id=?";
-            connection = getConnection();
-            ptmt = connection.prepareStatement(queryString);
-            ptmt.setBoolean(1, user.isBlocked());
-            ptmt.setLong(2, user.getId());
-            ptmt.executeUpdate();
-            System.out.println("User " + user.getUsername() + " unblocked successfully");
-        } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Ooops...Something went wrong. Unable to update user's status :(");
         } finally {
             closeResources();
         }
@@ -140,7 +103,7 @@ public class UserDaoImpl implements UserDao {
                         resultSet.getBoolean("blocked"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Ooops...Something went wrong. Unable to find user :(");
         } finally {
             closeResources();
         }
@@ -148,18 +111,4 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
-    public void closeResources() {
-        try {
-            if (resultSet != null)
-                resultSet.close();
-            if (ptmt != null)
-                ptmt.close();
-            if (connection != null)
-                connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
