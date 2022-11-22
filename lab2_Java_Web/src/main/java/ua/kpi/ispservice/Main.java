@@ -1,22 +1,19 @@
 package ua.kpi.ispservice;
 
-import ua.kpi.ispservice.controller.LoginController;
-import ua.kpi.ispservice.controller.MainController;
-import ua.kpi.ispservice.model.Model;
-import ua.kpi.ispservice.view.View;
+import ua.kpi.ispservice.controller.CustomerOptions;
+import ua.kpi.ispservice.controller.IndexController;
+import ua.kpi.ispservice.repository.UserRepository;
+import ua.kpi.ispservice.repository.dao.UserDaoImpl;
+import ua.kpi.ispservice.view.IndexView;
 
 import java.sql.SQLException;
 
 public class Main {
 
     public static void main(String[] args) throws SQLException {
-        MainController mainController = new MainController(new View());
-
-        try {
-            mainController.execute();
-        } catch (IllegalArgumentException e) {
-            mainController.execute();
-        }
-
+//        for (CustomerOptions customerOption : CustomerOptions.values()) {
+//            System.out.println(customerOption.toString());
+//        }
+        new IndexController(new IndexView(), new UserRepository(new UserDaoImpl())).execute();
     }
 }

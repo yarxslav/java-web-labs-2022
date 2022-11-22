@@ -1,9 +1,8 @@
-package ua.kpi.ispservice.dao;
+package ua.kpi.ispservice.repository.dao;
 
-import ua.kpi.ispservice.entity.Account;
 import ua.kpi.ispservice.entity.Tariff;
-import ua.kpi.ispservice.utils.ConnectionFactory;
-import ua.kpi.ispservice.utils.SortOption;
+import ua.kpi.ispservice.repository.utils.ConnectionFactory;
+import ua.kpi.ispservice.repository.utils.SortOption;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -175,6 +174,30 @@ public class TariffDaoImpl implements TariffDao {
         }
 
         return tariffs;
+    }
+
+    public Tariff findByNameAndServiceId(String name, Long serviceId) {
+        Tariff tariff = null;
+
+        try {
+            String queryString = "SELECT * FROM tariff WHERE name=? AND service_id=?";
+            connection = getConnection();
+            ptmt = connection.prepareStatement(queryString);
+            ptmt.setString(1, name);
+            ptmt.setLong(2, serviceId);
+            resultSet = ptmt.executeQuery();
+            if(resultSet.next()) {
+                tariff = new Tariff(resultSet.getLong("id"), resultSet.getLong("service_id"),
+                        resultSet.getString("name"), resultSet.getString("description"),
+                        new BigDecimal(resultSet.getDouble("cost")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResources();
+        }
+
+        return tariff;
     }
 
     public void closeResources() {

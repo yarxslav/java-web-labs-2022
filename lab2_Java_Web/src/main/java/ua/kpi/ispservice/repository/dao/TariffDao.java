@@ -1,7 +1,7 @@
-package ua.kpi.ispservice.dao;
+package ua.kpi.ispservice.repository.dao;
 
 import ua.kpi.ispservice.entity.Tariff;
-import ua.kpi.ispservice.utils.SortOption;
+import ua.kpi.ispservice.repository.utils.SortOption;
 
 import java.util.List;
 

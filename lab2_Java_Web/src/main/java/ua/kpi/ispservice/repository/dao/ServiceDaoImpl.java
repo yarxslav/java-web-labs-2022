@@ -1,8 +1,8 @@
-package ua.kpi.ispservice.dao;
+package ua.kpi.ispservice.repository.dao;
 
+import ua.kpi.ispservice.repository.utils.ConnectionFactory;
 import ua.kpi.ispservice.entity.Service;
-import ua.kpi.ispservice.entity.User;
-import ua.kpi.ispservice.utils.ConnectionFactory;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -79,7 +79,7 @@ public class ServiceDaoImpl implements ServiceDao {
             ptmt.setString(1, name);
             resultSet = ptmt.executeQuery();
             while (resultSet.next()) {
-                service = new Service(resultSet.getLong("id"), resultSet.getString("name"),
+                service = new Service(resultSet.getLong("id"), resultSet.getString("service_name"),
                         resultSet.getString("description"));
             }
         } catch (SQLException e) {

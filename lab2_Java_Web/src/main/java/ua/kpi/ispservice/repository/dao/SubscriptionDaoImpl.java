@@ -1,8 +1,9 @@
-package ua.kpi.ispservice.dao;
+package ua.kpi.ispservice.repository.dao;
 
 import ua.kpi.ispservice.entity.Subscription;
-import ua.kpi.ispservice.utils.ConnectionFactory;
+import ua.kpi.ispservice.repository.utils.ConnectionFactory;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -69,7 +70,10 @@ public class SubscriptionDaoImpl implements SubscriptionDao {
         List<Subscription> subscriptions = new ArrayList<>();
 
         try {
-            String queryString = "SELECT * FROM subscription WHERE customer_id=?";
+            String queryString = "select sub.id, sub.customer_id, sub.service_id, sub.tariff_id, " +
+                    "s.service_name, t.name, t.cost from subscription as sub\n" +
+                    "    join service s on s.id = sub.service_id\n" +
+                    "join tariff t on t.id = sub.tariff_id where sub.customer_id=?;";
             connection = getConnection();
             ptmt = connection.prepareStatement(queryString);
             ptmt.setLong(1, id);
@@ -78,6 +82,9 @@ public class SubscriptionDaoImpl implements SubscriptionDao {
                 subscriptions.add(new Subscription(resultSet.getLong("id"),
                         resultSet.getLong("customer_id"),
                         resultSet.getLong("service_id"),
+                        resultSet.getString("service_name"),
+                        resultSet.getString("name"),
+                        new BigDecimal(resultSet.getDouble("cost")),
                         resultSet.getLong("tariff_id")));
             }
         } catch (SQLException e) {

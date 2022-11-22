@@ -50,4 +50,9 @@ public class Service {
     public int hashCode() {
         return Objects.hash(id, serviceName, description);
     }
+
+    @Override
+    public String toString() {
+        return serviceName + ": " + description;
+    }
 }

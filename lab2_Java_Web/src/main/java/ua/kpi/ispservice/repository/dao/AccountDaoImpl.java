@@ -1,7 +1,8 @@
-package ua.kpi.ispservice.dao;
+package ua.kpi.ispservice.repository.dao;
 
 import ua.kpi.ispservice.entity.Account;
-import ua.kpi.ispservice.utils.ConnectionFactory;
+import ua.kpi.ispservice.entity.User;
+import ua.kpi.ispservice.repository.utils.ConnectionFactory;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -39,13 +40,13 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
-    public void updateBalance(Long ownerId, BigDecimal amount) {
+    public void updateBalance(User user, BigDecimal amount) {
         try {
             String queryString = "UPDATE account SET balance=? WHERE owner_id=?";
             connection = getConnection();
             ptmt = connection.prepareStatement(queryString);
             ptmt.setDouble(1, amount.doubleValue());
-            ptmt.setLong(2, ownerId);
+            ptmt.setLong(2, user.getId());
             ptmt.executeUpdate();
             System.out.println("Account balance updated successfully");
         } catch (SQLException e) {
@@ -75,6 +76,27 @@ public class AccountDaoImpl implements AccountDao {
         }
 
         return accounts;
+    }
+
+    public BigDecimal getBalanceByUser(User user) {
+        BigDecimal balance = null;
+
+        try {
+            String queryString = "SELECT balance FROM account WHERE owner_id=?";
+            connection = getConnection();
+            ptmt = connection.prepareStatement(queryString);
+            ptmt.setLong(1, user.getId());
+            resultSet = ptmt.executeQuery();
+            while(resultSet.next()) {
+                balance = new BigDecimal(resultSet.getDouble("balance"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResources();
+        }
+
+        return balance;
     }
 
     public void closeResources() {

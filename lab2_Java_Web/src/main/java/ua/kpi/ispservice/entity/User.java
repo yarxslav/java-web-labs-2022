@@ -9,8 +9,12 @@ public class User {
     private String password;
     private Long roleId;
     private boolean blocked;
-    public User () {
 
+    public User(String username, String password, Long roleId, boolean blocked) {
+        this.username = username;
+        this.password = password;
+        this.roleId = roleId;
+        this.blocked = blocked;
     }
 
     public User(Long id, String username, String password, Long roleId, boolean blocked) {

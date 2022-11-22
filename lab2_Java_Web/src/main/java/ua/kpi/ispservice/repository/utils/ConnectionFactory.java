@@ -1,4 +1,4 @@
-package ua.kpi.ispservice.utils;
+package ua.kpi.ispservice.repository.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

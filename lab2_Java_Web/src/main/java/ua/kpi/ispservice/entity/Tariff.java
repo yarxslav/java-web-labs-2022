@@ -11,6 +11,12 @@ public class Tariff {
     private String description;
     private BigDecimal cost;
 
+    public Tariff(Long serviceId, String name, String description, BigDecimal cost) {
+        this.serviceId = serviceId;
+        this.name = name;
+        this.description = description;
+        this.cost = cost;
+    }
 
     public Tariff(Long id, Long serviceId, String name, String description, BigDecimal cost) {
         this.id = id;
@@ -71,5 +77,10 @@ public class Tariff {
     @Override
     public int hashCode() {
         return Objects.hash(id, serviceId, cost);
+    }
+
+    @Override
+    public String toString() {
+        return name + ": " + description + "\ncost: " + cost + "\n";
     }
 }

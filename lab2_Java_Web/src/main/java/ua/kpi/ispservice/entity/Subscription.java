@@ -1,5 +1,6 @@
 package ua.kpi.ispservice.entity;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Subscription {
@@ -7,10 +8,30 @@ public class Subscription {
     private Long id;
     private Long userId;
     private Long serviceId;
+    private String serviceName;
+    private String tariffName;
+    private BigDecimal tariffCost;
+
     private Long tariffId;
+
+    public Subscription(Long id, Long userId, Long serviceId, String serviceName, String tariffName, BigDecimal tariffCost, Long tariffId) {
+        this.id = id;
+        this.userId = userId;
+        this.serviceId = serviceId;
+        this.serviceName = serviceName;
+        this.tariffName = tariffName;
+        this.tariffCost = tariffCost;
+        this.tariffId = tariffId;
+    }
 
     public Subscription(Long id, Long userId, Long serviceId, Long tariffId) {
         this.id = id;
+        this.userId = userId;
+        this.serviceId = serviceId;
+        this.tariffId = tariffId;
+    }
+
+    public Subscription(Long userId, Long serviceId, Long tariffId) {
         this.userId = userId;
         this.serviceId = serviceId;
         this.tariffId = tariffId;
@@ -59,5 +80,10 @@ public class Subscription {
     @Override
     public int hashCode() {
         return Objects.hash(id, userId, serviceId);
+    }
+
+    @Override
+    public String toString() {
+        return "Service: " + serviceName + "\nTariff: " + tariffName + "\nCost: " + tariffCost;
     }
 }

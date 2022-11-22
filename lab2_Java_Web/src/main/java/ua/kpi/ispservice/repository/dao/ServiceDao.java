@@ -1,4 +1,4 @@
-package ua.kpi.ispservice.dao;
+package ua.kpi.ispservice.repository.dao;
 
 import ua.kpi.ispservice.entity.Service;
 

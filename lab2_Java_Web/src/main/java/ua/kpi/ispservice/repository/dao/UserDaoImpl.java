@@ -1,7 +1,8 @@
-package ua.kpi.ispservice.dao;
+package ua.kpi.ispservice.repository.dao;
 
 import ua.kpi.ispservice.entity.User;
-import ua.kpi.ispservice.utils.ConnectionFactory;
+import ua.kpi.ispservice.repository.utils.ConnectionFactory;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -112,7 +113,7 @@ public class UserDaoImpl implements UserDao {
             ptmt.setLong(1, user.getId());
             resultSet = ptmt.executeQuery();
             while (resultSet.next()) {
-                role = resultSet.getString("r.role_name");
+                role = resultSet.getString("role_name");
             }
         } catch (SQLException e) {
             e.printStackTrace();

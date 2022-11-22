@@ -5,6 +5,11 @@ public class Role {
     public Long id;
     public String roleName;
 
+    public Role(Long id, String roleName) {
+        this.id = id;
+        this.roleName = roleName;
+    }
+
     public Long getId() {
         return id;
     }
