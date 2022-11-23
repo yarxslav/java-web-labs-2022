@@ -1,6 +1,6 @@
 package ua.kpi.ispservice.controller;
 
-import ua.kpi.ispservice.ApplicationContext;
+import ua.kpi.ispservice.context.ApplicationContext;
 import ua.kpi.ispservice.repository.UserRepository;
 import ua.kpi.ispservice.service.LoginService;
 import ua.kpi.ispservice.view.AdminView;

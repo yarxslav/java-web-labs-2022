@@ -1,6 +1,6 @@
 package ua.kpi.ispservice.controller;
 
-import ua.kpi.ispservice.ApplicationContext;
+import ua.kpi.ispservice.context.ApplicationContext;
 import ua.kpi.ispservice.entity.Service;
 import ua.kpi.ispservice.entity.Subscription;
 import ua.kpi.ispservice.entity.Tariff;
@@ -10,6 +10,9 @@ import ua.kpi.ispservice.repository.dao.*;
 import ua.kpi.ispservice.service.*;
 import ua.kpi.ispservice.view.CustomerView;
 import ua.kpi.ispservice.view.IndexView;
+import ua.kpi.ispservice.view.options.CustomerOptions;
+import ua.kpi.ispservice.view.options.DownloadOptions;
+import ua.kpi.ispservice.view.options.SortOption;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -22,7 +25,7 @@ public class CustomerController {
     private AccountService accountService;
     private ServiceService serviceService;
     private TariffService tariffService;
-    private Downloader downloader;
+    private DownloadService downloadService;
     private SubscriptionService subscriptionService;
 
     public CustomerController(CustomerView customerView) {
@@ -30,24 +33,28 @@ public class CustomerController {
         accountService = new AccountService(new AccountRepository(new AccountDaoImpl()));
         serviceService = new ServiceService(new ServiceRepository(new ServiceDaoImpl()));
         tariffService = new TariffService(new TariffRepository(new TariffDaoImpl()));
-        downloader = new Downloader(new TariffService(new TariffRepository(new TariffDaoImpl())),
-                new ServiceService(new ServiceRepository(new ServiceDaoImpl())));
+        downloadService = new DownloadService();
         subscriptionService = new SubscriptionService(new SubscriptionRepository(new SubscriptionDaoImpl()));
     }
 
     public void execute() {
         customerView.greeting(ApplicationContext.getInstance().getCurrentUser().getUsername());
         customerView.blockNotification(ApplicationContext.getInstance().getCurrentUser().isBlocked());
-        switch (customerView.defineCustomerOption()) {
-            case CHECK_BALANCE -> checkBalance();
-            case UPDATE_BALANCE -> updateBalance();
-            case CHECK_SERVICES_LIST -> checkServicesList();
-            case CHECK_TARIFFS_FOR_SERVICE -> checkTariffsForService();
-            case DOWNLOAD_ALL_TARIFFS -> downloadAllTariffs();
-            case DOWNLOAD_TARIFFS -> downloadExactServiceTariffs();
-            case SUBSCRIBE -> subscribe();
-            case CHECK_SUBSCRIPTION -> checkSubscriptions();
-            case LOG_OUT -> logout();
+        CustomerOptions customerOption = customerView.defineCustomerOption();
+        if (customerOption != null) {
+            switch (customerOption) {
+                case CHECK_BALANCE -> checkBalance();
+                case UPDATE_BALANCE -> updateBalance();
+                case CHECK_SERVICES_LIST -> checkServicesList();
+                case CHECK_TARIFFS_FOR_SERVICE -> checkTariffsForService();
+                case DOWNLOAD_ALL_TARIFFS -> downloadAllTariffs();
+                case DOWNLOAD_TARIFFS -> downloadExactServiceTariffs();
+                case SUBSCRIBE -> subscribe();
+                case CHECK_SUBSCRIPTION -> checkSubscriptions();
+                case LOG_OUT -> logout();
+            }
+        } else {
+            customerView.wrongOption();
         }
     }
 
@@ -72,21 +79,39 @@ public class CustomerController {
     private void checkTariffsForService() {
         String serviceName = customerView.getServiceName();
         Service service = serviceService.findByName(serviceName);
+        if (service == null) {
+            customerView.wrongServiceName();
+            return;
+        }
+        SortOption sortOption = customerView.defineSortOption();
 
-        List<Tariff> tariffs = tariffService.getTariffsByService(service);
-
-        customerView.displayTariffs(tariffs);
+        if (sortOption != null) {
+            List<Tariff> tariffs = tariffService.getTariffsByService(service, sortOption);
+            customerView.displayTariffs(tariffs);
+        } else {
+            customerView.wrongSortOption();
+        }
     }
 
     private void downloadAllTariffs() {
-        downloader.download(customerView.defineDownloadOptions());
+        customerView.downloadGroupedTariffs();
+        SortOption sortOption = customerView.defineSortOption();
+
+        downloadService.download(customerView.defineDownloadOptions(), null, sortOption);
         customerView.downloadSuccess();
     }
 
     private void downloadExactServiceTariffs() {
+        SortOption sortOption = customerView.defineSortOption();
+
         Service service = serviceService.findByName(customerView.getServiceName());
-        downloader.download(customerView.defineDownloadOptions(), service);
-        customerView.downloadSuccess();
+        DownloadOptions downloadOption = customerView.defineDownloadOptions();
+        if (downloadOption != null) {
+            downloadService.download(downloadOption, service, sortOption);
+            customerView.downloadSuccess();
+        } else {
+            customerView.wrongDownloadOption();
+        }
     }
 
     private void subscribe() {
@@ -100,14 +125,22 @@ public class CustomerController {
             Tariff tariff = tariffService.getByServiceAndName(service, tariffName);
             Subscription subscription = new Subscription(user.getId(),
                     service.getId(), tariff.getId());
-            subscriptionService.subscribe(subscription, tariff, user);
+            if (subscriptionService.subscribe(subscription, tariff, user)) {
+                customerView.subscribedSuccessfuly();
+            } else {
+                customerView.subscriptionExists();
+            }
         }
     }
 
     private void checkSubscriptions() {
         List<Subscription> subscriptions = subscriptionService.findByUser(ApplicationContext.getInstance().getCurrentUser());
+        if (!subscriptions.isEmpty()) {
+            customerView.displaySubscriptions(subscriptions);
+        } else {
+            customerView.noSubs();
+        }
 
-        customerView.displaySubscriptions(subscriptions);
     }
 
     private void logout() {

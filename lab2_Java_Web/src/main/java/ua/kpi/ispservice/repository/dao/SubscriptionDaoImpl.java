@@ -19,9 +19,8 @@ public class SubscriptionDaoImpl extends BasicDao implements SubscriptionDao {
             ptmt.setLong(2, subscription.getServiceId());
             ptmt.setLong(3, subscription.getTariffId());
             ptmt.executeUpdate();
-            System.out.println("Subscription Added Successfully");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Ooops...Something went wrong. Unable to create a subscription :(");
         } finally {
             closeResources();
         }

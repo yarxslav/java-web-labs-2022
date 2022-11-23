@@ -3,6 +3,7 @@ package ua.kpi.ispservice.service;
 import ua.kpi.ispservice.entity.Service;
 import ua.kpi.ispservice.entity.Tariff;
 import ua.kpi.ispservice.repository.TariffRepository;
+import ua.kpi.ispservice.view.options.SortOption;
 
 import java.util.List;
 
@@ -14,8 +15,8 @@ public class TariffService {
         this.tariffRepository = tariffRepository;
     }
 
-    public List<Tariff> getTariffsByService(Service service) {
-        return tariffRepository.getAllByService(service);
+    public List<Tariff> getTariffsByService(Service service, SortOption sortOption) {
+        return tariffRepository.getAllByService(service, sortOption);
     }
 
     public Tariff getByServiceAndName(Service service, String name) {

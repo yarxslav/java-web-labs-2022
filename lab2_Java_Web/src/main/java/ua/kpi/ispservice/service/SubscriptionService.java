@@ -24,8 +24,15 @@ public class SubscriptionService {
         userService = new UserService(new UserRepository(new UserDaoImpl()));
     }
 
-    public void subscribe(Subscription subscription, Tariff tariff, User user) {
-
+    public boolean subscribe(Subscription subscription, Tariff tariff, User user) {
+        List<Subscription> subscriptions = findByUser(user);
+        for (Subscription subs : subscriptions) {
+            if (subs.getUserId().equals(subscription.getUserId())
+                    && subs.getServiceId().equals(subscription.getServiceId())
+                    && subs.getTariffId().equals(subscription.getTariffId())) {
+                return false;
+            }
+        }
         subscriptionRepository.subscribe(subscription);
         accountService.updateBalance(user, tariff.getCost().negate());
 
@@ -33,6 +40,8 @@ public class SubscriptionService {
         if (comparison != 0 && comparison != 1) {
             userService.updateStatus(user, true);
         }
+
+        return true;
     }
 
     public List<Subscription> findByUser(User currentUser) {

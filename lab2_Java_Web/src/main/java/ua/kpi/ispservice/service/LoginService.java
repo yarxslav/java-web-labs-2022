@@ -1,6 +1,6 @@
 package ua.kpi.ispservice.service;
 
-import ua.kpi.ispservice.ApplicationContext;
+import ua.kpi.ispservice.context.ApplicationContext;
 import ua.kpi.ispservice.entity.User;
 import ua.kpi.ispservice.repository.UserRepository;
 

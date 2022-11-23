@@ -46,7 +46,22 @@ public class CustomerView {
     }
 
     public SortOption defineSortOption() {
-        return null;
+        SortOption option = null;
+
+        System.out.println("Select an option how you want to sort tariffs: (Type in the number of option)");
+        for (SortOption sortOption : SortOption.values()) {
+            System.out.println("\t" + sortOption.toString());
+        }
+
+        String value = scanner.nextLine();
+
+        for (SortOption sortOption : SortOption.values()) {
+            if (value.equals(sortOption.toString().substring(0, 1))) {
+                option = sortOption;
+            }
+        }
+
+        return option;
     }
 
     private void displayOptions() {
@@ -135,5 +150,37 @@ public class CustomerView {
 
     public void downloadSuccess() {
         System.out.println("Successfully downloaded. Look for file in Downloads folder.\n");
+    }
+
+    public void wrongOption() {
+        System.out.println("Ooops... Seems like you didn't type the right option in. Try again!\n");
+    }
+
+    public void wrongServiceName() {
+        System.out.println("Ooops...Seems like there's no service with such title. Try again!\n");
+    }
+
+    public void wrongSortOption() {
+        System.out.println("Ooops...Seems like there's no such sort option. Try again!\n");
+    }
+
+    public void downloadGroupedTariffs() {
+        System.out.println("If you want to download tariffs grouped by service, please, type in \'Group\' and press Enter\n");
+    }
+
+    public void subscriptionExists() {
+        System.out.println("You have this subscription already! Do you have a lot of funds?\n");
+    }
+
+    public void subscribedSuccessfuly() {
+        System.out.println("Subscription added successfully\n");
+    }
+
+    public void noSubs() {
+        System.out.println("Seems like you don't have subscriptions yet :(\n");
+    }
+
+    public void wrongDownloadOption() {
+        System.out.println("There's no such download option. Try again!\n");
     }
 }

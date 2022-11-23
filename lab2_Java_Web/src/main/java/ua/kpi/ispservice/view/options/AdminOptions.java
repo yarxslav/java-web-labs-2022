@@ -7,7 +7,9 @@ public enum AdminOptions {
     UPDATE_TARIFF("3. Update existing tariff"),
     REGISTER_CUSTOMER("4. Register new user"),
     BLOCK_CUSTOMER("5. Block user"),
-    UNBLOCK_CUSTOMER("6. Unblock user");
+    UNBLOCK_CUSTOMER("6. Unblock user"),
+    CHECK_SERVICES("7. Check all services"),
+    LOGOUT("8. Logout");
 
     public final String label;
 

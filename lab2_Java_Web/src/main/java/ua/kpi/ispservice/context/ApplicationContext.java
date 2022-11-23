@@ -1,4 +1,4 @@
-package ua.kpi.ispservice;
+package ua.kpi.ispservice.context;
 
 import ua.kpi.ispservice.entity.User;
 

@@ -1,6 +1,6 @@
 package ua.kpi.ispservice.controller;
 
-import ua.kpi.ispservice.ApplicationContext;
+import ua.kpi.ispservice.context.ApplicationContext;
 import ua.kpi.ispservice.entity.Service;
 import ua.kpi.ispservice.entity.Tariff;
 import ua.kpi.ispservice.entity.User;
@@ -17,8 +17,11 @@ import ua.kpi.ispservice.service.ServiceService;
 import ua.kpi.ispservice.service.TariffService;
 import ua.kpi.ispservice.service.UserService;
 import ua.kpi.ispservice.view.AdminView;
+import ua.kpi.ispservice.view.IndexView;
+import ua.kpi.ispservice.view.options.AdminOptions;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class AdminController {
 
@@ -38,47 +41,74 @@ public class AdminController {
 
     public void execute() {
         adminView.greeting(ApplicationContext.getInstance().getCurrentUser().getUsername());
-        switch (adminView.defineAdminOption()) {
-            case ADD_TARIFF -> addTariff();
-            case DELETE_TARIFF -> deleteTariff();
-            case UPDATE_TARIFF -> updateTariff();
-            case REGISTER_CUSTOMER -> registerCustomer();
-            case BLOCK_CUSTOMER -> updateStatus(true);
-            case UNBLOCK_CUSTOMER -> updateStatus(false);
+        AdminOptions option = adminView.defineAdminOption();
+        if (option != null) {
+            switch (option) {
+                case ADD_TARIFF -> addTariff();
+                case DELETE_TARIFF -> deleteTariff();
+                case UPDATE_TARIFF -> updateTariff();
+                case REGISTER_CUSTOMER -> registerCustomer();
+                case BLOCK_CUSTOMER -> updateStatus(true);
+                case UNBLOCK_CUSTOMER -> updateStatus(false);
+                case CHECK_SERVICES -> checkServices();
+                case LOGOUT -> logout();
+            }
+        } else {
+            adminView.wrongOption();
         }
     }
 
     private void addTariff() {
         Service service = serviceService.findByName(adminView.askForData("Service Name"));
-        Tariff tariff = new Tariff(service.getId(), adminView.askForData("Tariff Name"),
-                adminView.askForData("Tariff Description"),
-                new BigDecimal(Double.parseDouble(adminView.askForData("Tariff Cost"))));
 
-        tariffService.create(tariff);
-        adminView.tariffAdded(tariff.getName());
+        try {
+            Tariff tariff = new Tariff(service.getId(), adminView.askForData("Tariff Name"),
+                    adminView.askForData("Tariff Description"),
+                    new BigDecimal(Double.parseDouble(adminView.askForData("Tariff Cost"))));
+            tariffService.create(tariff);
+            adminView.tariffAdded(tariff.getName());
+        } catch (NumberFormatException e) {
+            adminView.wrongData();
+            addTariff();
+        }
     }
 
     private void deleteTariff() {
         Service service = serviceService.findByName(adminView.askForData("Service Name"));
-        String name = adminView.askForData("Tariff name");
-        Tariff tariff = tariffService.getByServiceAndName(service, name);
+        if (service != null) {
+            String name = adminView.askForData("Tariff name");
+            Tariff tariff = tariffService.getByServiceAndName(service, name);
+            if (tariff != null) {
+                tariffService.delete(tariff);
+                adminView.tariffDeleted();
+            } else {
+                adminView.wrongTariff();
+            }
+        } else {
+            adminView.wrongService();
+        }
 
-        tariffService.delete(tariff);
-        adminView.tariffDeleted();
     }
 
     private void updateTariff() {
         Service service = serviceService.findByName(adminView.askForData("Service Name"));
-        String name = adminView.askForData("Tariff name");
-        Tariff tariff = tariffService.getByServiceAndName(service, name);
-
-        switch (adminView.defineUpdateOption()) {
-            case NAME -> updateTariffName(tariff);
-            case DESCRIPTION -> updateTariffDescription(tariff);
-            case COST -> updateTariffCost(tariff);
+        if (service != null) {
+            String name = adminView.askForData("Tariff name");
+            Tariff tariff = tariffService.getByServiceAndName(service, name);
+            if (tariff != null) {
+                switch (adminView.defineUpdateOption()) {
+                    case NAME -> updateTariffName(tariff);
+                    case DESCRIPTION -> updateTariffDescription(tariff);
+                    case COST -> updateTariffCost(tariff);
+                }
+                adminView.tariffUpdated();
+            } else {
+                adminView.wrongTariff();
+            }
+        } else {
+            adminView.wrongService();
         }
 
-        adminView.tariffUpdated();
     }
 
     private void updateTariffName(Tariff tariff) {
@@ -94,9 +124,16 @@ public class AdminController {
     }
 
     private void updateTariffCost(Tariff tariff) {
-        BigDecimal newCost = new BigDecimal(Double.parseDouble(adminView.askForData("New Cost")));
-        tariff.setCost(newCost);
-        tariffService.update(tariff);
+        try {
+            BigDecimal newCost = new BigDecimal(Double.parseDouble(adminView.askForData("New Cost")));
+            tariff.setCost(newCost);
+            tariffService.update(tariff);
+        } catch (NumberFormatException e) {
+            adminView.wrongData();
+            updateTariffCost(tariff);
+        }
+
+
     }
 
     private void registerCustomer() {
@@ -123,5 +160,15 @@ public class AdminController {
         } else {
             adminView.userDoesntExist();
         }
+    }
+
+    private void logout() {
+        ApplicationContext.getInstance().setCurrentUser(null);
+        new IndexController(new IndexView(), new UserRepository(new UserDaoImpl())).execute();
+    }
+
+    private void checkServices() {
+        List<Service> services = serviceService.findAll();
+        adminView.displayServices(services);
     }
 }

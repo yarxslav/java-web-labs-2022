@@ -7,6 +7,5 @@ import java.util.List;
 public interface ServiceDao {
 
     List<Service> findAll();
-    Service findServiceById(Long id);
     Service findServiceByName(String name);
 }

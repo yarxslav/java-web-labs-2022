@@ -31,29 +31,6 @@ public class ServiceDaoImpl extends BasicDao implements ServiceDao {
     }
 
     @Override
-    public Service findServiceById(Long id) {
-        Service service = null;
-
-        try {
-            String queryString = "SELECT * FROM service WHERE id=?";
-            connection = getConnection();
-            ptmt = connection.prepareStatement(queryString);
-            ptmt.setLong(1, id);
-            resultSet = ptmt.executeQuery();
-            while (resultSet.next()) {
-                service = new Service(resultSet.getLong("id"), resultSet.getString("name"),
-                        resultSet.getString("description"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeResources();
-        }
-
-        return service;
-    }
-
-    @Override
     public Service findServiceByName(String name) {
         Service service = null;
 

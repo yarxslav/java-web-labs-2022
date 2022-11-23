@@ -4,37 +4,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f925dbee-dd87-4130-aee2-daddf2d48de3" name="Changes" comment="almost done">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/RoleRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/dao/BasicDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/service/RoleService.java" afterDir="false" />
+    <list default="true" id="f925dbee-dd87-4130-aee2-daddf2d48de3" name="Changes" comment="a bit of refactoring. only sorting left">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/service/download/Downloader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/service/download/DownloaderDOCX.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/service/download/DownloaderPDF.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/service/download/DownloaderTXT.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/ApplicationContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/context/ApplicationContext.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/controller/AdminOptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/view/options/AdminOptions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/controller/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/controller/CustomerOptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/view/options/CustomerOptions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/controller/DownloadOptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/view/options/DownloadOptions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/controller/UpdateOptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/view/options/UpdateOptions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/controller/IndexController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/controller/IndexController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/entity/Subscription.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/entity/Subscription.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/dao/AccountDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/dao/AccountDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/dao/RoleDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/dao/RoleDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/TariffRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/TariffRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/dao/ServiceDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/dao/ServiceDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/dao/ServiceDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/dao/ServiceDaoImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/dao/SubscriptionDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/dao/SubscriptionDaoImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/dao/TariffDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/dao/TariffDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/dao/TariffDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/dao/TariffDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/dao/UserDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/dao/UserDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/dao/UserDaoImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/utils/RoleRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/repository/utils/SortOption.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/view/options/SortOption.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/service/AccountService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/service/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/service/Downloader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/service/Downloader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/service/DownloadService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/service/LoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/service/LoginService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/service/SubscriptionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/service/SubscriptionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/service/TariffService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/service/TariffService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/view/AdminView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/view/AdminView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/view/CustomerView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/view/CustomerView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/view/IndexView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/view/IndexView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/view/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/view/LoginView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/view/options/AdminOptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/kpi/ispservice/view/options/AdminOptions.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,9 +39,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Kotlin Class" />
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -117,7 +112,8 @@
       <workItem from="1669052782498" duration="2954000" />
       <workItem from="1669056963833" duration="230000" />
       <workItem from="1669057245024" duration="6934000" />
-      <workItem from="1669107212026" duration="32024000" />
+      <workItem from="1669107212026" duration="32068000" />
+      <workItem from="1669213112528" duration="10524000" />
     </task>
     <task id="LOCAL-00001" summary="beans added and test dao">
       <created>1666349877094</created>
@@ -140,7 +136,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669144716266</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="a bit of refactoring. only sorting left">
+      <created>1669152152195</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1669152152195</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -161,6 +164,7 @@
     <MESSAGE value="beans added and test dao" />
     <MESSAGE value="dao updated. test controller added." />
     <MESSAGE value="almost done" />
-    <option name="LAST_COMMIT_MESSAGE" value="almost done" />
+    <MESSAGE value="a bit of refactoring. only sorting left" />
+    <option name="LAST_COMMIT_MESSAGE" value="a bit of refactoring. only sorting left" />
   </component>
 </project>

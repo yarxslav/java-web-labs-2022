@@ -91,56 +91,20 @@ public class TariffDaoImpl extends BasicDao implements TariffDao {
     }
 
     @Override
-    public Tariff findById(Long id) {
-        Tariff tariff = null;
-
-        try {
-            String queryString = "SELECT * FROM tariff WHERE id=?";
-            connection = getConnection();
-            ptmt = connection.prepareStatement(queryString);
-            ptmt.setLong(1, id);
-            resultSet = ptmt.executeQuery();
-            tariff = new Tariff(resultSet.getLong("id"), resultSet.getLong("service_id"),
-                    resultSet.getString("name"), resultSet.getString("description"),
-                    new BigDecimal(resultSet.getDouble("cost")));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeResources();
-        }
-
-        return tariff;
-    }
-
-    @Override
-    public Tariff findByIdAndServiceId(Long id, Long serviceId) {
-        Tariff tariff = null;
-
-        try {
-            String queryString = "SELECT * FROM tariff WHERE id=? AND service_id=?";
-            connection = getConnection();
-            ptmt = connection.prepareStatement(queryString);
-            ptmt.setLong(1, id);
-            ptmt.setLong(2, serviceId);
-            resultSet = ptmt.executeQuery();
-            tariff = new Tariff(resultSet.getLong("id"), resultSet.getLong("service_id"),
-                    resultSet.getString("name"), resultSet.getString("description"),
-                    new BigDecimal(resultSet.getDouble("cost")));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeResources();
-        }
-
-        return tariff;
-    }
-
-    @Override
-    public List<Tariff> findByServiceId(Long serviceId) {
+    public List<Tariff> findByServiceId(Long serviceId, SortOption sortOption) {
         List<Tariff> tariffs = new ArrayList<>();
 
         try {
             String queryString = "SELECT * FROM tariff WHERE service_id=?";
+            if (sortOption != null) {
+                switch (sortOption) {
+                    case ALPHABET_ASC -> queryString += " ORDER BY name ASC";
+                    case ALPHABET_DESC -> queryString += " ORDER BY name DESC";
+                    case PRICE_ASC -> queryString += "ORDER BY cost ASC";
+                    case PRICE_DESC -> queryString += "ORDER BY cost DESC";
+                }
+            }
+
             connection = getConnection();
             ptmt = connection.prepareStatement(queryString);
             ptmt.setLong(1, serviceId);
@@ -152,7 +116,7 @@ public class TariffDaoImpl extends BasicDao implements TariffDao {
                         new BigDecimal(resultSet.getDouble("cost"))));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Ooops...Unable to find tariffs. Try again!\n");
         } finally {
             closeResources();
         }
@@ -170,7 +134,7 @@ public class TariffDaoImpl extends BasicDao implements TariffDao {
             ptmt.setString(1, name);
             ptmt.setLong(2, serviceId);
             resultSet = ptmt.executeQuery();
-            if(resultSet.next()) {
+            if (resultSet.next()) {
                 tariff = new Tariff(resultSet.getLong("id"), resultSet.getLong("service_id"),
                         resultSet.getString("name"), resultSet.getString("description"),
                         new BigDecimal(resultSet.getDouble("cost")));

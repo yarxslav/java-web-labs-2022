@@ -3,6 +3,7 @@ package ua.kpi.ispservice.repository;
 import ua.kpi.ispservice.entity.Service;
 import ua.kpi.ispservice.entity.Tariff;
 import ua.kpi.ispservice.repository.dao.TariffDaoImpl;
+import ua.kpi.ispservice.view.options.SortOption;
 
 import java.util.List;
 
@@ -14,8 +15,8 @@ public class TariffRepository {
         this.tariffDao = tariffDao;
     }
 
-    public List<Tariff> getAllByService(Service service) {
-        return tariffDao.findByServiceId(service.getId());
+    public List<Tariff> getAllByService(Service service, SortOption sortOption) {
+        return tariffDao.findByServiceId(service.getId(), sortOption);
     }
 
     public Tariff getByServiceAndName(Service service, String name) {

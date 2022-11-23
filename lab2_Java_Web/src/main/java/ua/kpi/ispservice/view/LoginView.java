@@ -16,6 +16,6 @@ public class LoginView {
     }
 
     public void unauthorizedMessage() {
-        System.out.println("Incorrect credentials. Try again, please!");
+        System.out.println("Incorrect credentials. Try again, please!\n");
     }
 }
