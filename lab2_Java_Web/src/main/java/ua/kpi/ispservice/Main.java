@@ -9,10 +9,7 @@ import java.sql.SQLException;
 
 public class Main {
 
-    public static void main(String[] args) throws SQLException {
-//        for (CustomerOptions customerOption : CustomerOptions.values()) {
-//            System.out.println(customerOption.toString());
-//        }
+    public static void main(String[] args) {
         new IndexController(new IndexView(), new UserRepository(new UserDaoImpl())).execute();
     }
 }
